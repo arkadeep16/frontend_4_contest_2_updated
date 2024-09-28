@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import PinInput from "./component/PinInput";
+import Details from "./component/Details";
 
 function App() {
+  const [searchParam, setSearchParam] = useState(null);
+  const [isFetch, setIsFetch] = useState(false);
+  const [response, setResponse] = useState(null);
+  const [loader, setLoader] = useState(false);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!isFetch ? (
+        <PinInput
+          setIsFetch={setIsFetch}
+          setSearchParam={setSearchParam}
+          setResponse={setResponse}
+          setLoader={setLoader}
+        />
+      ) : (
+        <Details searchParam={searchParam} response={response} />
+      )}
+      {loader && (
+        <center>
+          <div className="loader"></div>
+        </center>
+      )}
     </div>
   );
 }
